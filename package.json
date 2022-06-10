@@ -1,0 +1,101 @@
+{
+	"name": "api",
+	"version": "1.0.0",
+	"description": "Fastify API Template. Written in TypeScript.",
+	"main": "index.js",
+	"scripts": {
+		"build": "tsc",
+		"start": "node dist/lib",
+		"dev": "tsc-watch --onSuccess 'node dist/index.js'",
+		"test": "jest --verbose --runInBand --detectOpenHandles",
+		"coverage": "jest --coverage --no-cache --verbose --runInBand --detectOpenHandles",
+		"lint": "eslint --ext .ts,.js . --ignore-path .gitignore",
+		"fix": "eslint --ext .ts,.js . --ignore-path .gitignore --fix",
+		"lint-staged": "lint-staged"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/phr3nzy/api-template.git"
+	},
+	"keywords": [
+		"api-template",
+		"fastify",
+		"typescript"
+	],
+	"author": "phr3nzy",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/phr3nzy/api-template/issues"
+	},
+	"homepage": "https://github.com/phr3nzy/api-template#readme",
+	"dependencies": {
+		"ajv": "^8.11.0",
+		"ajv-errors": "^3.0.0",
+		"ajv-formats": "^2.1.1",
+		"env-cmd": "^10.1.0",
+		"fastify": "^4.0.0",
+		"fastify-cookie": "^5.7.0",
+		"fastify-env": "^2.2.0",
+		"fastify-helmet": "^7.1.0",
+		"fastify-plugin": "^3.0.1",
+		"fastify-rate-limit": "^5.9.0",
+		"fastify-request-context": "^2.3.0",
+		"fastify-sensible": "^3.2.0",
+		"fastify-static": "^4.7.0",
+		"fastify-swagger": "^5.2.0",
+		"make-promises-safe": "^5.1.0",
+		"pino": "^8.0.0",
+		"pino-pretty": "^8.0.0",
+		"qs": "^6.10.5",
+		"under-pressure": "^6.1.0",
+		"uuid": "^8.3.2"
+	},
+	"devDependencies": {
+		"@types/node": "^17.0.41",
+		"@typescript-eslint/eslint-plugin": "^5.27.1",
+		"@typescript-eslint/parser": "^5.27.1",
+		"eslint": "^8.17.0",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-prettier": "^4.0.0",
+		"eslint-plugin-security": "^1.5.0",
+		"husky": "^8.0.1",
+		"jest": "^28.1.1",
+		"lint-staged": "^13.0.1",
+		"prettier": "^2.6.2",
+		"ts-jest": "^28.0.4",
+		"ts-node": "^10.8.1",
+		"ts-watch": "^1.0.8",
+		"tsc-watch": "^5.0.3",
+		"typescript": "^4.7.3"
+	},
+	"lint-staged": {
+		"*.{js,ts,json,md,yml,yaml}": [
+			"prettier --write"
+		]
+	},
+	"jest": {
+		"verbose": true,
+		"testEnvironment": "node",
+		"globalSetup": "./tests/config/globalSetup.ts",
+		"globalTeardown": "./tests/config/globalTeardown.ts",
+		"testPathIgnorePatterns": [
+			"node_modules",
+			"tests/config/*"
+		],
+		"transform": {
+			"^.+\\.tsx?$": "ts-jest"
+		},
+		"testRegex": [
+			"/tests?/[a-zA-Z0-9]{0,}\\.(test|spec)\\.(js|ts)[\\s]?",
+			"/tests?/.*/[a-zA-Z0-9]{0,}\\.(test|spec)\\.(js|ts)[\\s]?"
+		],
+		"moduleFileExtensions": [
+			"ts",
+			"tsx",
+			"js",
+			"jsx",
+			"json",
+			"node"
+		]
+	}
+}
