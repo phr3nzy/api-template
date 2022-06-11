@@ -10,34 +10,11 @@ import rateLimiterPlugin from './plugins/rateLimiter';
 import underPressurePlugin from './plugins/underPressure';
 import routes from './routes';
 import ajv from './config/ajv';
-import { FastifyRequest } from 'fastify';
-import { v4 as uuid } from 'uuid';
-import qs from 'qs';
-import logger from './config/logger';
-
-function genReqId(_: FastifyRequest) {
-	return uuid();
-}
+import SERVER_CONFIG from './config/server';
 
 async function bootstrap() {
 	// Initialize the server
-	const server = fastify({
-		trustProxy: true,
-		logger,
-		ignoreTrailingSlash: true,
-		genReqId,
-		querystringParser: (str: string) =>
-			qs.parse(str, {
-				allowPrototypes: false,
-				charset: 'utf-8',
-				charsetSentinel: true,
-				parseArrays: false,
-				interpretNumericEntities: true,
-				parameterLimit: 5,
-				strictNullHandling: true,
-				plainObjects: false,
-			}),
-	});
+	const server = fastify(SERVER_CONFIG);
 
 	// Use a custom schema validator
 	server.setValidatorCompiler(({ schema }) => {

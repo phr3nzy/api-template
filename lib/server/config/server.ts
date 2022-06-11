@@ -1,4 +1,4 @@
-import { FastifyRequest } from 'fastify';
+import { FastifyRequest, FastifyServerOptions } from 'fastify';
 import { v4 as uuid } from 'uuid';
 import PINO_CONFIG from './logger';
 import qs from 'qs';
@@ -7,7 +7,7 @@ function genReqId(_: FastifyRequest) {
 	return uuid();
 }
 
-const SERVER_CONFIG = {
+const SERVER_CONFIG: FastifyServerOptions = {
 	trustProxy: true,
 	logger: PINO_CONFIG,
 	ignoreTrailingSlash: true,
