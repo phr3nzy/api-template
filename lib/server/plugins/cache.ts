@@ -5,9 +5,17 @@ import { parseRedisUrl } from 'parse-redis-url-simple';
 
 async function cache(fastify: FastifyInstance) {
 	const [parsedUrl] = parseRedisUrl(fastify.config.REDIS_URL);
+	if (!parsedUrl) {
+		throw new Error(
+			`Plugin error: cannot parse redis url. Value: ${
+				fastify.config.REDIS_URL || null
+			}`,
+		);
+	}
+
 	const redis = new IORedis({
 		enableAutoPipelining: true,
-		...(parsedUrl ? parsedUrl : {}),
+		...parsedUrl,
 		tls: fastify.config.REDIS_URL.startsWith('rediss')
 			? {
 					rejectUnauthorized: false,
