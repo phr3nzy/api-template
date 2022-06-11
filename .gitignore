@@ -9,3 +9,4 @@ server/static/main.css
 .DS_Store
 coverage
 .tsbuildinfo
+dist
