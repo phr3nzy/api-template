@@ -1,5 +1,4 @@
 import { FastifyInstance } from 'fastify';
-// TODO: fix .json imports
 import spec from './index.spec.json';
 
 export default function RegisterV1Routes(fastify: FastifyInstance, _: {}) {
@@ -7,7 +6,7 @@ export default function RegisterV1Routes(fastify: FastifyInstance, _: {}) {
 		method: 'GET',
 		url: '/',
 		schema: spec.schema,
-		handler: async (request, reply) => {
+		handler: async (_, __) => {
 			return { success: true, message: 'Success!' };
 		},
 	});
