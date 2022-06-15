@@ -9,6 +9,7 @@ async function config(fastify: FastifyInstance) {
 	await fastify.register(fastifyEnvPlugin, {
 		schema: ENV_SCHEMA,
 		confKey: 'env',
+		dotenv: true,
 		ajv,
 	});
 
