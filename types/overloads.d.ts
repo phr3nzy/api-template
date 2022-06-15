@@ -16,7 +16,7 @@ type EnvSchema = {
 declare module 'fastify' {
 	interface FastifyInstance {
 		env: EnvSchema;
-		config: EnvSchema;
+		config: {} & EnvSchema;
 		cache: Redis;
 		swaggerCSP: {
 			script: string[];
