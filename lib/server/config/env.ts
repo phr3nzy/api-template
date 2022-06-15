@@ -1,6 +1,6 @@
 const ENV_SCHEMA = {
 	type: 'object',
-	required: ['SERVICE_NAME'],
+	required: ['SERVICE_NAME', 'REDIS_URL'],
 
 	properties: {
 		SERVICE_NAME: {
@@ -32,6 +32,10 @@ const ENV_SCHEMA = {
 		PORT: {
 			type: 'integer',
 			default: 3000,
+		},
+		REDIS_URL: {
+			type: 'string',
+			format: 'uri',
 		},
 	},
 };
