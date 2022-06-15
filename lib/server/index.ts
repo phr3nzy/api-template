@@ -7,7 +7,7 @@ import fastifyHelmet from '@fastify/helmet';
 import cachePlugin from './plugins/cache';
 import fastifyStaticPlugin from '@fastify/static';
 import rateLimiterPlugin from './plugins/rateLimiter';
-import underPressurePlugin from './plugins/underPressure';
+// import underPressurePlugin from './plugins/underPressure';
 import routes from './routes';
 import ajv from './config/ajv';
 import SERVER_CONFIG from './config/server';
@@ -35,16 +35,15 @@ async function bootstrap() {
 	await server.register(configPlugin);
 
 	// Sane default HTTP headers
-	// TODO: use correct typings for swaggerCSP
-	await server.register(fastifyHelmet, (instance: any) => {
+	await server.register(fastifyHelmet, instance => {
 		return {
 			contentSecurityPolicy: {
 				directives: {
 					...fastifyHelmet.contentSecurityPolicy.getDefaultDirectives(),
 					'form-action': ["'self'"],
 					'img-src': ["'self'", 'data:', 'validator.swagger.io'],
-					'script-src': ["'self'"].concat(instance.swaggerCSP.script),
-					'style-src': ["'self'", 'https:'].concat(instance.swaggerCSP.style),
+					'script-src': ["'self'"].concat(instance.swaggerCSP?.script),
+					'style-src': ["'self'", 'https:'].concat(instance.swaggerCSP?.style),
 				},
 			},
 		};
@@ -59,7 +58,7 @@ async function bootstrap() {
 	});
 
 	// Enable healthchecks
-	await server.register(underPressurePlugin);
+	// await server.register(underPressurePlugin);
 
 	// Enable rate-limiter
 	await server.register(rateLimiterPlugin);
