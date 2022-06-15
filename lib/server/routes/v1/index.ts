@@ -1,7 +1,10 @@
 import { FastifyInstance } from 'fastify';
 import spec from './index.spec.json';
 
-export default function RegisterV1Routes(fastify: FastifyInstance, _: {}) {
+export default async function RegisterV1Routes(
+	fastify: FastifyInstance,
+	_: {},
+) {
 	fastify.route({
 		method: 'GET',
 		url: '/',
