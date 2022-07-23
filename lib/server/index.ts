@@ -10,6 +10,7 @@ import SERVER_CONFIG from './config/server';
 import swagger from './plugins/swagger';
 import fastifyStatic from '@fastify/static';
 import path from 'path';
+import cache from './plugins/cache';
 
 async function bootstrap() {
 	// Initialize the server
@@ -65,6 +66,9 @@ async function bootstrap() {
 			},
 		};
 	});
+
+	// Enable cache plugin
+	await server.register(cache);
 
 	// Enable healthchecks
 	await server.register(underPressurePlugin);

@@ -1,0 +1,50 @@
+name: 'Test'
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v2
+      - name: Start containers
+        run: docker-compose -f "docker-compose.dev.yml" up -d --build
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2.2.0
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Lint
+        run: yarn lint
+      - name: Build
+        run: yarn build
+      - name: Run tests
+        run: yarn test:ci
+        env:
+          SERVICE_NAME: api-template-testing
+          NODE_ENV: testing
+          APP_ENV: testing
+          LOG_LEVEL: debug
+          DISABLE_LOGGING: false
+          HOST: 0.0.0.0
+          PORT: 3000
+          REDIS_URL: redis://localhost:6379/
+      - name: Stop containers
+        if: always()
+        run: docker-compose -f "docker-compose.dev.yml" down
+  build_image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: 'Build and tag image'
+        run: docker build . -t api-template:latest

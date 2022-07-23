@@ -2,8 +2,6 @@ FROM node:16.15.1-alpine3.15 AS BUILDER
 
 WORKDIR /app
 
-RUN npm i -g yarn
-
 COPY package.json yarn.lock ./
 
 RUN yarn install --frozen-lockfile --ignore-scripts
@@ -18,7 +16,7 @@ FROM node:16.15.1-alpine3.15
 
 WORKDIR /app
 
-RUN apk add tini
+RUN apk --no-cache add tini
 
 ENV NODE_ENV production
 
@@ -29,4 +27,4 @@ COPY --chown=node-user:node --from=BUILDER /app .
 
 ENTRYPOINT ["/sbin/tini", "--"]
 
-CMD ["node", "/appdist", "--max-old-space-size=400"]
+CMD ["node", "/app/dist", "--max-old-space-size=400"]
