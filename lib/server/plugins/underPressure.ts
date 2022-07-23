@@ -4,11 +4,24 @@ import { FastifyInstance } from 'fastify';
 
 async function underPressure(fastify: FastifyInstance) {
 	await fastify.register(underPressureFastifyPlugin, {
+		maxEventLoopDelay: 3000,
+		maxEventLoopUtilization: 0.8,
 		exposeStatusRoute: {
 			routeOpts: {
 				logLevel: fastify.config.LOG_LEVEL,
 			},
-			url: '/health',
+			routeResponseSchemaOpts: {
+				status: { type: 'string', default: 'ok' },
+				metrics: {
+					type: 'object',
+					properties: {
+						eventLoopDelay: { type: 'number' },
+						rssBytes: { type: 'number' },
+						heapUsed: { type: 'number' },
+						eventLoopUtilized: { type: 'number' },
+					},
+				},
+			},
 		},
 		healthCheck: async function (fastifyInstance) {
 			try {
@@ -16,7 +29,7 @@ async function underPressure(fastify: FastifyInstance) {
 				const cacheIsAlive = await fastifyInstance.cache.get('connection_test');
 
 				if (cacheIsAlive) {
-					return true;
+					return { status: 'ok', metrics: fastify.memoryUsage() };
 				}
 
 				return false;
