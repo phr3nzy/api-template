@@ -27,7 +27,7 @@ async function cache(fastify: FastifyInstance) {
 					rejectUnauthorized: false,
 					requestCert: false,
 			  }
-			: {},
+			: (null as any),
 		reconnectOnError: err => {
 			fastify.log.error('Reconnect on error', err);
 
