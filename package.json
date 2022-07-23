@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"build": "tsc",
-		"start": "node dist/lib",
+		"start": "env-cmd node dist",
 		"dev": "tsc-watch --onSuccess 'node dist/index.js'",
 		"test": "jest --no-cache --verbose --runInBand --detectOpenHandles --forceExit",
 		"test:ci": "jest --ci --no-cache --verbose --runInBand --detectOpenHandles --forceExit",
