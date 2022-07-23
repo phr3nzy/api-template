@@ -1,5 +1,6 @@
 {
-	"include": ["./lib", "./lib/**/*.*.json", "./types", "./lib/**/*.txt"],
+	"exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts"],
+	"include": ["./lib", "./lib/**/*.json"],
 	"compilerOptions": {
 		/* Visit https://aka.ms/tsconfig to read more about this file */
 
@@ -33,9 +34,12 @@
 		// "paths": {},                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
 		// "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
 		"typeRoots": [
-			"./types"
+			"./node_modules/@types"
 		] /* Specify multiple folders that act like './node_modules/@types'. */,
-		// "types": [],                                      /* Specify type package names to be included without being referenced in a source file. */
+		"types": [
+			"node",
+			"jest"
+		] /* Specify type package names to be included without being referenced in a source file. */,
 		// "allowUmdGlobalAccess": true,                     /* Allow accessing UMD globals from modules. */
 		// "moduleSuffixes": [],                             /* List of file name suffixes to search when resolving a module. */
 		"resolveJsonModule": true /* Enable importing .json files. */,
@@ -97,11 +101,11 @@
 		"noImplicitOverride": true /* Ensure overriding members in derived classes are marked with an override modifier. */,
 		"noPropertyAccessFromIndexSignature": true /* Enforces using indexed accessors for keys declared using an indexed type. */,
 		"allowUnusedLabels": true /* Disable error reporting for unused labels. */,
-		"allowUnreachableCode": true /* Disable error reporting for unreachable code. */,
+		"allowUnreachableCode": true /* Disable error reporting for unreachable code. */
 
 		/* Completeness */
 		// "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
-		"skipLibCheck": true /* Skip type checking all .d.ts files. */
+		// "skipLibCheck": true /* Skip type checking all .d.ts files. */
 	},
 	"ts-node": {
 		"files": true

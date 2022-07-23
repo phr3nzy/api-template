@@ -1,6 +1,6 @@
 import { FastifyRequest, FastifyServerOptions } from 'fastify';
 import { v4 as uuid } from 'uuid';
-import PINO_CONFIG from './logger';
+import logger from './logger';
 import qs from 'qs';
 
 function genReqId(_: FastifyRequest) {
@@ -8,8 +8,29 @@ function genReqId(_: FastifyRequest) {
 }
 
 const SERVER_CONFIG: FastifyServerOptions = {
+	ajv: {
+		customOptions: {
+			allErrors: true,
+			removeAdditional: 'all',
+			useDefaults: true,
+			coerceTypes: true,
+			validateSchema: true,
+			ownProperties: true,
+			logger: {
+				log(...args) {
+					logger.info(args);
+				},
+				error(...args) {
+					logger.error(args);
+				},
+				warn(...args) {
+					logger.warn(args);
+				},
+			},
+		},
+	},
 	trustProxy: true,
-	logger: PINO_CONFIG,
+	logger,
 	ignoreTrailingSlash: true,
 	genReqId,
 	querystringParser: (str: string) =>

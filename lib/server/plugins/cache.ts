@@ -1,7 +1,13 @@
 import { FastifyInstance } from 'fastify';
 import fastifyPlugin from 'fastify-plugin';
-import IORedis from 'ioredis';
+import IORedis, { Redis } from 'ioredis';
 import { parseRedisUrl } from 'parse-redis-url-simple';
+
+declare module 'fastify' {
+	interface FastifyInstance {
+		cache: Redis;
+	}
+}
 
 async function cache(fastify: FastifyInstance) {
 	const [parsedUrl] = parseRedisUrl(fastify.config.REDIS_URL);
